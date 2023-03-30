@@ -2,65 +2,63 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <limits.h>
 
-#define MAX 500000000
-
-float *gerar_vetor(int n);
+double *gerar_vetor(int n);
 void mostrar_vetor(float *v,int tamanho);
 
 int main() {
-    int i; 
-    float soma;
-    float media;
+
+    int MAX = 500000000;
     time_t t;
     srand(time(NULL));
-    double inicio = omp_get_wtime();
-    float *vetor = malloc(MAX*sizeof(float));
+    double *vetor = NULL;
     vetor = gerar_vetor(MAX);
-    //mostrar_vetor(vetor, MAX);
+    int i;
+    double soma = 0.0;
+    double inicio,fim;
+
+    inicio = omp_get_wtime();
+    for (i=0;i<MAX;i++) {
+        soma = soma + vetor[i];
+        
+    }
+    fim = omp_get_wtime();
+    double media = soma/MAX;
+    printf("Soma: %lf\n",soma);
+    printf("Media: %lf\n",media);
+    double temposeq = fim-inicio;
+    printf("Tempo sequencial: %lf\n",temposeq);
+
+    soma = 0;
+    inicio = omp_get_wtime();
 
     #pragma omp parallel num_threads(3)
     {
-        #pragma omp for reduction(+:soma) 
-            for(i = 0; i < MAX; i++){
+        #pragma omp for reduction (+:soma)
+            for (i=0;i<MAX;i++) {
                 soma = soma + vetor[i];
             }
     }
-    media = soma/(float)MAX;
-    double fim = omp_get_wtime();
-    double t_paralelo = fim-inicio;
-    printf("soma: %d\n", soma);
-    printf("media: %d\n", media);
-    printf("Execucao paralela sequencial: %f\n",t_paralelo);
-
-
-    float somaP;
-    float mediaP;
-    double inicioParalelo = omp_get_wtime();
-    float *vetor1 = malloc(MAX*sizeof(float));
-    vetor1 = gerar_vetor(MAX);
-    //mostrar_vetor(vetor1, MAX);
-    for(i = 0; i < MAX; i++){
-        somaP = somaP + vetor1[i];
-    }
-    mediaP = somaP/(float)MAX;
-    double fimParalelo = omp_get_wtime();
-    double t_serial = fimParalelo-inicioParalelo;
-    float speedup = (t_serial - t_paralelo);
-    printf("soma serial: %d\n", somaP);
-    printf("media serial: %d\n", mediaP);
-    printf("Execucao serial: %f\n",t_serial);
-    printf("speedup: %f\n", speedup);
-    printf("eficiencia: %f\n", (speedup/3));
+    fim = omp_get_wtime();
+    media = soma/MAX;
+    printf("Soma: %lf\n",soma);
+    printf("Media: %lf\n",media);
+    double tempoparalelo = fim-inicio;
+    printf("Tempo paralelo: %.4f\n",tempoparalelo);
+    double speedup = temposeq/tempoparalelo;
+    printf("Speedup: %f\n",speedup);
+    double eficiencia = speedup/3.0;
+    printf("Eficiencia: %f\n",eficiencia);
     return 0;
 }
 
-float *gerar_vetor(int n) {
-    float *vetor;
-    int i;
-    vetor = (float *)malloc(sizeof(float) * n);
+double *gerar_vetor(int n) {
+    double *vetor;
+    int i, valor = 100000;
+    vetor = (double *)malloc(sizeof(double) * n);
     for (i=0;i<n;i++) {
-        int num = (rand()%100000);
+        double num = (rand() % valor);
         vetor[i] = num;
     }
     return vetor;
