@@ -5,7 +5,7 @@
 
 int main() {
 
-    long int numero = 1500000000;
+    long int numero = 1000000000;
     long int j = 1;
     double soma;
     double inicio = omp_get_wtime();
@@ -55,9 +55,9 @@ int main() {
             }
         soma +=sum;
     }
-    printf("Static: %f \n", soma);
+    printf("soma static: %f \n", soma);
     fim = omp_get_wtime();
-    printf("Tempo static: %f \n", fim-inicio);
+    printf("Duracao static: %f \n", fim-inicio);
 
     soma = 0.0;
 
