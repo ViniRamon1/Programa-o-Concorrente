@@ -46,3 +46,7 @@ As `sections` permitem que os programadores dividam o código em seções indepe
 As `tasks` são úteis quando se tem muitas tarefas independentes e não é possível prever o tempo de execução de cada tarefa. As `tasks` também podem ser usadas para equilibrar a carga em um sistema com vários processadores. Por exemplo, em um sistema com quatro processadores, pode-se criar quatro tarefas e distribuí-las entre os processadores.
 
 Em geral, as `tasks` são mais flexíveis que as `sections` e permitem que o programador tenha mais controle sobre a execução paralela. No entanto, o uso de `tasks` também requer mais atenção ao gerenciamento de memória e ao controle de sincronização.
+
+###Referências:
+https://web.engr.oregonstate.edu/~mjb/cs575/Handouts/tasks.1pp.pdf
+https://www.openmp.org/wp-content/uploads/openmp.webinar.22.09.2021.ruudvdp.pdf
