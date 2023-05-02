@@ -47,6 +47,6 @@ As `tasks` são úteis quando se tem muitas tarefas independentes e não é poss
 
 Em geral, as `tasks` são mais flexíveis que as `sections` e permitem que o programador tenha mais controle sobre a execução paralela. No entanto, o uso de `tasks` também requer mais atenção ao gerenciamento de memória e ao controle de sincronização.
 
-###Referências:
+### Referências:
 https://web.engr.oregonstate.edu/~mjb/cs575/Handouts/tasks.1pp.pdf
 https://www.openmp.org/wp-content/uploads/openmp.webinar.22.09.2021.ruudvdp.pdf
